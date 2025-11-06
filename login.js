@@ -1,16 +1,15 @@
 const axios = require('axios');
 const { chromium } = require('playwright');
 
-// 环境变量
-const accounts = (process.env.NETLIB_ACCOUNTS || "").split(";")
+const token = process.env.BOT_TOKEN;
+const chatId = process.env.CHAT_ID;
+const accounts = (process.env.ACCOUNTS || "").split(";")
   .filter(x => x.trim())
   .map(item => {
     const [user, pass] = item.split(",");
     return { user: user?.trim(), pass: pass?.trim() };
   })
   .filter(acc => acc.user && acc.pass);
-const token = process.env.TELEGRAM_BOT_TOKEN;
-const chatId = process.env.TELEGRAM_CHAT_ID;
 
 async function sendTelegram(message) {
   if (!token || !chatId) return;
